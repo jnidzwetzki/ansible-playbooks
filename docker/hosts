@@ -1,5 +1,5 @@
 [dockerhosts]
-debian10-vm1.home.arpcache.de
-debian10-vm2.home.arpcache.de
-debian10-vm3.home.arpcache.de
-debian10-vm4.home.arpcache.de
+debian10-vm1
+debian10-vm2
+debian10-vm3
+debian10-vm4
