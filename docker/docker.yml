@@ -7,9 +7,27 @@
   tasks:
   - name: Basic tools
     apt: 
-      name: ['rsync', 'dnsutils', 'vim']
+      name: ['rsync', 'dnsutils', 'vim', 'unattended-upgrades']
       update_cache: true
       state: present 
+
+  - name: Setup unattended-upgrades (part 1)
+    copy:
+      content: ""
+      dest: /etc/apt/apt.conf.d/20auto-upgrades 
+      force: no
+      group: root
+      owner: root
+      mode: 0644
+
+  - name: Setup unattended-upgrades (part 2)
+    lineinfile:
+      dest: /etc/apt/apt.conf.d/20auto-upgrades
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+    with_items:
+      - { regexp: 'APT::Periodic::Update-Package-Lists', line: 'APT::Periodic::Update-Package-Lists "1";' }
+      - { regexp: 'APT::Periodic::Unattended-Upgrade', line: 'APT::Periodic::Unattended-Upgrade "1";' }
 
   - name: Setup the best editor 
     alternatives:
