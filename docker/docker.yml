@@ -29,12 +29,12 @@
       - { regexp: 'APT::Periodic::Update-Package-Lists', line: 'APT::Periodic::Update-Package-Lists "1";' }
       - { regexp: 'APT::Periodic::Unattended-Upgrade', line: 'APT::Periodic::Unattended-Upgrade "1";' }
 
-  - name: Setup the best editor 
+  - name: Setup vim (part 1) 
     alternatives:
       name: editor
       path: /usr/bin/vim.basic
 
-  - name: Setup vim (part 1)
+  - name: Setup vim (part 2)
     copy:
       content: ""
       dest: /root/.vimrc
@@ -43,7 +43,7 @@
       owner: root
       mode: 0600
 
-  - name: Setup vim (part 2)
+  - name: Setup vim (part 3)
     lineinfile:
       dest: /root/.vimrc
       regexp: "{{ item.regexp }}"
@@ -68,12 +68,12 @@
       update_cache: true
       state: present 
 
-  - name: Docker apt key 
+  - name: Install Docker apt key
     apt_key:
       url: https://download.docker.com/linux/debian/gpg 
       state: present
 
-  - name: Add Docker repository.
+  - name: Add Docker repository
     apt_repository:
       repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
       state: present
@@ -85,7 +85,7 @@
       update_cache: true
       state: present 
 
-  - name: Prune old docker images cron 
+  - name: Prune old Docker images cronjob 
     cron:
       name: Prune old docker images
       minute: "1"
