@@ -61,7 +61,6 @@
                 state=present
     notify: Restart ssh
 
-
   - name: Install required tools for Docker
     apt: 
       name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common']
