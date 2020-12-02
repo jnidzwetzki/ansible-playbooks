@@ -1,0 +1,14 @@
+- name: Manage docker servers
+  hosts: dockerhosts
+  remote_user: root
+
+  tasks:
+  - name: Basic host setup
+    import_tasks: "../tasks/basic.yml"
+
+  - name: Setup docker 
+    import_tasks: "../tasks/docker.yml"
+
+  handlers:
+  - name: Basic Handler
+    import_tasks: "../handlers/basic.yml"

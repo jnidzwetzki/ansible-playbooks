@@ -1,0 +1,4 @@
+- name: Restart ssh
+  service: name=ssh state=restarted
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+

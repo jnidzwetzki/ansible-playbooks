@@ -1,0 +1,41 @@
+  - name: Install required tools for Docker
+    apt: 
+      name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common']
+      update_cache: true
+      state: present 
+
+  - name: Install Docker apt key
+    apt_key:
+      url: https://download.docker.com/linux/debian/gpg 
+      state: present
+
+  - name: Add Docker repository
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+      state: present
+      update_cache: true
+
+  - name: Install Docker
+    apt: 
+      name: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+      update_cache: true
+      state: present 
+
+  - name: Prune old Docker images cronjob 
+    cron:
+      name: Prune old docker images
+      minute: "1"
+      hour: "4"
+      user: root
+      job: "docker system prune -af --filter 'until=48h' > /dev/null 2>&1"
+      cron_file: ansible_docker-prune
+
+#  - name: Prune old docker images
+#    shell: docker system prune -af --filter 'until=48h'
+
+  - name: Download docker compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/1.25.0/docker-compose-Linux-x86_64 
+      dest: /usr/local/bin/docker-compose 
+      mode: '0755'
+
