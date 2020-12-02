@@ -1,0 +1,18 @@
+- name: Manage kubernetes servers
+  hosts: k8shosts
+  debugger: on_failed
+  remote_user: root
+
+  tasks:
+  - name: Basic host setup
+    import_tasks: "../tasks/basic.yml"
+
+  - name: Setup docker 
+    import_tasks: "../tasks/docker.yml"
+
+  - name: Setup kubernetes
+    import_tasks: "../tasks/kubernetes.yml"
+
+  handlers:
+  - name: Basic Handler
+    import_tasks: "../handlers/basic.yml"

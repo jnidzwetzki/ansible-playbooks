@@ -1,0 +1,55 @@
+  - name: Setup sysctl.d for Kubernetes (part 1) 
+    ansible.posix.sysctl:
+       name: net.bridge.bridge-nf-call-ip6tables 
+       value: '1'
+       state: present
+       sysctl_file: /etc/sysctl.d/k8s.conf
+
+  - name: Setup sysctl.d for Kubernetes (part 2) 
+    ansible.posix.sysctl:
+       name: net.bridge.bridge-nf-call-iptables 
+       value: '1'
+       state: present
+       sysctl_file: /etc/sysctl.d/k8s.conf
+  
+  - name: Install required tools for Kubernetes
+    apt: 
+      name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common']
+      update_cache: true
+      state: present 
+
+  - name: Install Kubernetes apt key
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg 
+      state: present
+
+  - name: Add Kubernetes repository
+    apt_repository:
+      repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+      state: present
+      update_cache: true
+
+  - name: Install Kubernetes tools
+    apt: 
+      name: ['kubelet', 'kubeadm', 'kubectl']
+      update_cache: true
+      state: present 
+
+  - name: Prevent kubelet from being upgraded
+    dpkg_selections:
+      name: kubelet
+      selection: hold
+
+  - name: Prevent kubadm from being upgraded
+    dpkg_selections:
+      name: kubeadm
+      selection: hold
+
+  - name: Prevent kubctl from being upgraded
+    dpkg_selections:
+      name: kubectl
+      selection: hold
+
+
+
+
