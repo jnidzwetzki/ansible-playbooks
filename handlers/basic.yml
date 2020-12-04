@@ -2,3 +2,7 @@
   service: name=ssh state=restarted
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
+- name: Restart containerd
+  service: name=containerd state=restarted
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+

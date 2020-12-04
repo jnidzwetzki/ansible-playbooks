@@ -1,0 +1,17 @@
+- name: Manage kubernetes servers
+  hosts: k8shosts
+  remote_user: root
+
+  tasks:
+  - name: Basic host setup
+    import_tasks: "../tasks/basic.yml"
+
+  - name: Setup containerd
+    import_tasks: "../tasks/containerd.yml"
+
+  - name: Setup kubernetes
+    import_tasks: "../tasks/kubernetes.yml"
+
+  handlers:
+  - name: Basic Handler
+    import_tasks: "../handlers/basic.yml"

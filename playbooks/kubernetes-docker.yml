@@ -1,6 +1,5 @@
 - name: Manage kubernetes servers
   hosts: k8shosts
-  debugger: on_failed
   remote_user: root
 
   tasks:
