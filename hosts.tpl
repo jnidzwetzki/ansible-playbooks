@@ -1,3 +1,6 @@
+[basichosts]
+block-storage
+
 [k8shosts]
 debian10-k8s-vm1
 debian10-k8s-vm2

@@ -1,0 +1,11 @@
+- name: Manage basic servers
+  hosts: basichosts
+  remote_user: root
+
+  tasks:
+  - name: Basic host setup
+    import_tasks: "../tasks/basic.yml"
+
+  handlers:
+  - name: Basic Handler
+    import_tasks: "../handlers/basic.yml"
