@@ -38,7 +38,7 @@
 
   - name: Install Kubernetes tools
     apt: 
-      name: ['kubelet', 'kubeadm', 'kubectl']
+      name: ['kubelet', 'kubeadm', 'kubectl', 'open-iscsi']
       update_cache: true
       state: present 
 
