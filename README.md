@@ -9,5 +9,5 @@ ansible-galaxy collection install ansible.posix
 ```
 
 ```bash
-ansible-playbook docker.yml -i hosts
+ansible-playbook playbooks/docker.yml  -i hosts
 ```
