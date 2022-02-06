@@ -46,12 +46,24 @@
   - name: Install containerd
     apt: 
       name: containerd.io
+#      name: containerd.io=1.4.6-1
       update_cache: true
       state: present 
+
+#  - name: Prevent containerd from being upgraded
+#    dpkg_selections:
+#      name: containerd
+#      selection: hold
 
   - name: Ensure containerd is initialized
     shell: containerd config default > /etc/containerd/config.toml && touch /etc/containerd/.init_done
     args:
       creates: /etc/containerd/.init_done
     notify: Restart containerd 
+
+  - name: Set containerd options
+    lineinfile:
+      path: /etc/containerd/config.toml
+      insertafter: '^(\s+)\[plugins.+\w\.runc\.options\]'
+      line: '            SystemdCgroup = true'
 
