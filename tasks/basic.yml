@@ -1,6 +1,6 @@
   - name: Basic tools
     apt: 
-      name: ['rsync', 'dnsutils', 'vim', 'unattended-upgrades']
+      name: ['rsync', 'dnsutils', 'vim', 'unattended-upgrades', 'sudo']
       update_cache: true
       state: present 
 
