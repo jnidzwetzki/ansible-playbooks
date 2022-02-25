@@ -1,0 +1,37 @@
+  - name: Install postgres development tools
+    apt: 
+      name: ['git', 'build-essential', 'cmake', 'postgresql-13', 'postgresql-server-dev-13']
+      update_cache: true
+      state: present 
+
+  - name: Add working worker
+    ansible.builtin.user:
+      name: jan
+      shell: /bin/bash
+
+  - name: Copy vim config
+    ansible.builtin.copy:
+      remote_src: yes
+      src: /root/.vimrc
+      dest: /home/jan/.vimrc
+      owner: jan
+      group: jan
+
+  - name: Create ssh dir for jan 
+    ansible.builtin.file:
+      path: /home/jan/.ssh
+      state: directory
+      mode: '0755'
+      owner: jan
+      group: jan
+
+  - name: Copy ssh key
+    ansible.builtin.copy:
+      remote_src: yes
+      src: /root/.ssh/authorized_keys
+      dest: /home/jan/.ssh/authorized_keys
+      owner: jan
+      group: jan
+      mode: '0600'
+
+
