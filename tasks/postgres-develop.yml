@@ -21,10 +21,28 @@
       update_cache: true
       state: present 
 
-  - name: Add working worker
+
+  - name: Make sure 'wheel' group exists
+    group:
+       name: wheel
+       state: present
+
+  - name: Allow 'wheel' group to have passwordless sudo
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^%wheel'
+      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
+
+  - name: Add work worker
     ansible.builtin.user:
       name: '{{ username }}'
       shell: /bin/bash
+      state: present
+      createhome: yes
+      groups: wheel
+      append: yes
 
   - name: Copy vim config
     ansible.builtin.copy:
