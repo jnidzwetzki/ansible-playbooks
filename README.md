@@ -11,3 +11,9 @@ ansible-galaxy collection install ansible.posix
 ```bash
 ansible-playbook playbooks/docker.yml  -i hosts
 ```
+
+# Postgres 12 development host on debian 11
+```bash
+ansible-playbook playbooks/postgres-develop.yml  -i hosts
+```
+
