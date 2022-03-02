@@ -1,5 +1,8 @@
+
 - name: Manage basic servers
   hosts: basichosts
+  vars:
+    username: jan
   remote_user: root
 
   tasks:

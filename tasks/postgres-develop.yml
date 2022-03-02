@@ -1,25 +1,42 @@
   - name: Install postgres development tools
     apt: 
-      name: ['git', 'build-essential', 'cmake', 'postgresql-13', 'postgresql-server-dev-13']
+      name: ['git', 'build-essential', 'cmake', 'valgrind']
+      update_cache: true
+      state: present
+
+  - name: Install PostgreSQL apt key
+    apt_key:
+      url: https://www.postgresql.org/media/keys/ACCC4CF8.asc 
+      state: present
+
+  - name: Add PostgreSQL repository
+    apt_repository:
+      repo: "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main"
+      state: present
+      update_cache: true
+
+  - name: Install PostgreSQL 12
+    apt: 
+      name: ['postgresql-12', 'postgresql-server-dev-12', 'pg-bsd-indent', 'perltidy']
       update_cache: true
       state: present 
 
   - name: Add working worker
     ansible.builtin.user:
-      name: jan
+      name: '{{ username }}'
       shell: /bin/bash
 
   - name: Copy vim config
     ansible.builtin.copy:
       remote_src: yes
       src: /root/.vimrc
-      dest: /home/jan/.vimrc
+      dest: '/home/{{ username }}/.vimrc'
       owner: jan
       group: jan
 
-  - name: Create ssh dir for jan 
+  - name: Create ssh dir for work user
     ansible.builtin.file:
-      path: /home/jan/.ssh
+      path: '/home/{{ username }}/.ssh'
       state: directory
       mode: '0755'
       owner: jan
@@ -29,9 +46,28 @@
     ansible.builtin.copy:
       remote_src: yes
       src: /root/.ssh/authorized_keys
-      dest: /home/jan/.ssh/authorized_keys
-      owner: jan
-      group: jan
+      dest: '/home/{{ username }}/.ssh/authorized_keys'
+      owner: '{{ username }}'
+      group: '{{ username }}'
       mode: '0600'
 
+  - name: Checkout PostgreSQL
+    git:
+     repo: https://github.com/postgres/postgres.git
+     dest: /home/{{ username }}/postgres
+     update: no
+     version: master
+ 
+  - name: Download pgindent typedef
+    get_url:
+       url: https://buildfarm.postgresql.org/cgi-bin/typedefs.pl
+       dest: '/home/{{ username }}/postgres/src/tools/pgindent/typedefs.list'
+
+  - name: Update owner
+    ansible.builtin.file:
+      path: "/home/{{username}}/postgres"
+      state: directory
+      recurse: yes
+      owner: '{{ username }}'
+      group: '{{ username }}'
 
