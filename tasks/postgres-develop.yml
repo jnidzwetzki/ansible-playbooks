@@ -17,7 +17,7 @@
 
   - name: Install PostgreSQL 12
     apt: 
-      name: ['postgresql-12', 'postgresql-server-dev-12', 'pg-bsd-indent', 'perltidy']
+      name: ['postgresql-12', 'postgresql-server-dev-12', 'pg-bsd-indent', 'perltidy', 'postgresql-12-dbgsym']
       update_cache: true
       state: present 
 
