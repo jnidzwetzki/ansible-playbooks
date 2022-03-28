@@ -81,9 +81,24 @@
        url: https://buildfarm.postgresql.org/cgi-bin/typedefs.pl
        dest: '/home/{{ username }}/postgres/src/tools/pgindent/typedefs.list'
 
-  - name: Update owner
+  - name: Update owner of PostgreSQL
     ansible.builtin.file:
       path: "/home/{{username}}/postgres"
+      state: directory
+      recurse: yes
+      owner: '{{ username }}'
+      group: '{{ username }}'
+
+  - name: Checkout TimescaleDB
+    git:
+     repo: https://github.com/timescale/timescaledb.git
+     dest: /home/{{ username }}/timescaledb
+     update: no
+     version: main
+ 
+  - name: Update owner of TimescaleDB
+    ansible.builtin.file:
+      path: "/home/{{username}}/timescaledb"
       state: directory
       recurse: yes
       owner: '{{ username }}'
