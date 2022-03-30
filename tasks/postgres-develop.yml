@@ -17,10 +17,9 @@
 
   - name: Install PostgreSQL 12
     apt: 
-      name: ['postgresql-12', 'postgresql-server-dev-12', 'pg-bsd-indent', 'perltidy', 'postgresql-12-dbgsym']
+      name: ['postgresql-12', 'postgresql-server-dev-12', 'pg-bsd-indent', 'perltidy', 'postgresql-12-dbgsym', 'libdbi-perl']
       update_cache: true
       state: present 
-
 
   - name: Make sure 'wheel' group exists
     group:
