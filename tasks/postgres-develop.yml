@@ -70,15 +70,15 @@
 
   - name: Checkout PostgreSQL
     git:
-     repo: https://github.com/postgres/postgres.git
-     dest: /home/{{ username }}/postgres
-     update: no
-     version: master
+     repo: https://github.com/postgres/src/postgres.git
+     dest: /home/{{ username }}/postgres/postgres.git
+     update: yes
+     bare: yes
  
-  - name: Download pgindent typedef
-    get_url:
-       url: https://buildfarm.postgresql.org/cgi-bin/typedefs.pl
-       dest: '/home/{{ username }}/postgres/src/tools/pgindent/typedefs.list'
+#  - name: Download pgindent typedef
+#    get_url:
+#       url: https://buildfarm.postgresql.org/cgi-bin/typedefs.pl
+#       dest: '/home/{{ username }}/postgres/src/tools/pgindent/typedefs.list'
 
   - name: Update owner of PostgreSQL
     ansible.builtin.file:
