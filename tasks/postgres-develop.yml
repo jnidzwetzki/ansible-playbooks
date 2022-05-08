@@ -68,26 +68,6 @@
       group: '{{ username }}'
       mode: '0600'
 
-  - name: Checkout PostgreSQL
-    git:
-     repo: https://github.com/postgres/src/postgres.git
-     dest: /home/{{ username }}/postgres/postgres.git
-     update: yes
-     bare: yes
- 
-#  - name: Download pgindent typedef
-#    get_url:
-#       url: https://buildfarm.postgresql.org/cgi-bin/typedefs.pl
-#       dest: '/home/{{ username }}/postgres/src/tools/pgindent/typedefs.list'
-
-  - name: Update owner of PostgreSQL
-    ansible.builtin.file:
-      path: "/home/{{username}}/postgres"
-      state: directory
-      recurse: yes
-      owner: '{{ username }}'
-      group: '{{ username }}'
-
   - name: Checkout TimescaleDB
     git:
      repo: https://github.com/timescale/timescaledb.git
@@ -102,4 +82,29 @@
       recurse: yes
       owner: '{{ username }}'
       group: '{{ username }}'
+
+# Needed for clang-format-8
+  - name: Install LLVM apt key
+    apt_key:
+      url: https://apt.llvm.org/llvm-snapshot.gpg.key
+      state: present
+
+  - name: Add LLVM-8 repository
+    apt_repository:
+      repo: "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main"
+      state: present
+      update_cache: true
+
+  - name: Add Debian 10 repository
+    apt_repository:
+      repo: "deb http://deb.debian.org/debian buster main"
+      state: present
+      update_cache: true
+
+  - name: Install clang-format-8 
+    apt: 
+      name: ['clang-format-8']
+      update_cache: true
+      state: present
+
 
