@@ -107,4 +107,20 @@
       update_cache: true
       state: present
 
+  - name: clang-format alternative 
+    community.general.alternatives:
+      name: clang-format
+      path: /usr/bin/clang-format-11 
+      link: /usr/bin/clang-format 
 
+  - name: clang-format-11 alternative 
+    community.general.alternatives:
+      name: clang-format
+      path: /usr/bin/clang-format-11 
+      priority: 10
+
+  - name: clang-format-8 alternative 
+    community.general.alternatives:
+      name: clang-format
+      path: /usr/bin/clang-format-8 
+      priority: 100
