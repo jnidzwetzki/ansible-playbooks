@@ -1,6 +1,6 @@
   - name: Install postgres development tools
     apt: 
-      name: ['git', 'build-essential', 'cmake', 'valgrind', 'clang-format', 'systemd-coredump']
+      name: ['git', 'build-essential', 'cmake', 'valgrind', 'clang-format', 'systemd-coredump', 'strace']
       update_cache: true
       state: present
 
