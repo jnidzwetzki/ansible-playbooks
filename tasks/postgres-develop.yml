@@ -124,3 +124,20 @@
       name: clang-format
       path: /usr/bin/clang-format-8 
       priority: 100
+
+  - name: Install Timescale apt key
+    apt_key:
+     url: https://packagecloud.io/timescale/timescaledb/gpgkey
+     state: present
+
+  - name: Add Timescale repository
+    apt_repository:
+      repo: "deb https://packagecloud.io/timescale/timescaledb/debian/ buster main"
+      state: present
+      update_cache: true
+
+  - name: Install timescaledb-tools package
+    apt:
+      name: ['timescaledb-tools']
+      update_cache: true
+      state: present
