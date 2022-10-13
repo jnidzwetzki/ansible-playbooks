@@ -83,27 +83,21 @@
       owner: '{{ username }}'
       group: '{{ username }}'
 
-# Needed for clang-format-8
+# Needed for clang-format-14
   - name: Install LLVM apt key
     apt_key:
       url: https://apt.llvm.org/llvm-snapshot.gpg.key
       state: present
 
-  - name: Add LLVM-8 repository
+  - name: Add LLVM-14 repository
     apt_repository:
-      repo: "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main"
+      repo: "deb http://apt.llvm.org/bullseye/ llvm-toolchain-bullseye-14 main"
       state: present
       update_cache: true
 
-  - name: Add Debian 10 repository
-    apt_repository:
-      repo: "deb http://deb.debian.org/debian buster main"
-      state: present
-      update_cache: true
-
-  - name: Install clang-format-8 
+  - name: Install clang-format-14
     apt: 
-      name: ['clang-format-8']
+      name: ['clang-format-14']
       update_cache: true
       state: present
 
@@ -119,10 +113,10 @@
       path: /usr/bin/clang-format-11 
       priority: 10
 
-  - name: clang-format-8 alternative 
+  - name: clang-format-14 alternative 
     community.general.alternatives:
       name: clang-format
-      path: /usr/bin/clang-format-8 
+      path: /usr/bin/clang-format-14 
       priority: 100
 
   - name: Install Timescale apt key
