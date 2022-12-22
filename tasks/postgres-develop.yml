@@ -4,23 +4,6 @@
       update_cache: true
       state: present
 
-  - name: Install PostgreSQL apt key
-    apt_key:
-      url: https://www.postgresql.org/media/keys/ACCC4CF8.asc 
-      state: present
-
-  - name: Add PostgreSQL repository
-    apt_repository:
-      repo: "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main"
-      state: present
-      update_cache: true
-
-  - name: Install PostgreSQL 12
-    apt: 
-      name: ['postgresql-12', 'postgresql-server-dev-12', 'pg-bsd-indent', 'perltidy', 'postgresql-12-dbgsym', 'libdbi-perl', 'python-is-python3']
-      update_cache: true
-      state: present 
-
   - name: Make sure 'wheel' group exists
     group:
        name: wheel
@@ -48,16 +31,16 @@
       remote_src: yes
       src: /root/.vimrc
       dest: '/home/{{ username }}/.vimrc'
-      owner: jan
-      group: jan
+      owner: '{{ username }}'
+      group: '{{ username }}'
 
   - name: Create ssh dir for work user
     ansible.builtin.file:
       path: '/home/{{ username }}/.ssh'
       state: directory
       mode: '0755'
-      owner: jan
-      group: jan
+      owner: '{{ username }}'
+      group: '{{ username }}'
 
   - name: Copy ssh key
     ansible.builtin.copy:
