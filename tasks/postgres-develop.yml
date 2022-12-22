@@ -1,7 +1,13 @@
   - name: Install postgres development tools
     apt: 
-      name: ['git', 'build-essential', 'cmake', 'valgrind', 'clang-format', 'systemd-coredump', 'strace', 'coccinelle', 'libssl-dev', 'libxml2-dev', 'bison', 'flex']
+      name: ['git', 'build-essential', 'cmake', 'valgrind', 'clang-format', 'systemd-coredump', 'strace', 'coccinelle', 'libssl-dev', 'libxml2-dev', 'bison', 'flex', 'libipc-run-perl', 'libdbi-perl']
       update_cache: true
+      state: present
+
+  - name: Allow the debugger to connect to processes of the same user
+    ansible.posix.sysctl:
+      name: kernel.yama.ptrace_scope
+      value: '0'
       state: present
 
   - name: Make sure 'wheel' group exists
