@@ -1,6 +1,6 @@
   - name: Install postgres development tools
     apt: 
-      name: ['git', 'build-essential', 'cmake', 'valgrind', 'clang-format', 'systemd-coredump', 'strace', 'coccinelle', 'libssl-dev', 'libxml2-dev', 'bison', 'flex', 'libipc-run-perl', 'libdbi-perl']
+      name: ['git', 'build-essential', 'cmake', 'valgrind', 'clang-format', 'systemd-coredump', 'strace', 'coccinelle', 'libssl-dev', 'libxml2-dev', 'bison', 'flex', 'libipc-run-perl', 'systemtap-sdt-dev', 'libreadline-dev', 'zlib1g-dev', 'libdbi-perl']
       update_cache: true
       state: present
 
@@ -89,38 +89,4 @@
       name: ['clang-format-14']
       update_cache: true
       state: present
-
-  - name: clang-format alternative 
-    community.general.alternatives:
-      name: clang-format
-      path: /usr/bin/clang-format-11 
-      link: /usr/bin/clang-format 
-
-  - name: clang-format-11 alternative 
-    community.general.alternatives:
-      name: clang-format
-      path: /usr/bin/clang-format-11 
-      priority: 10
-
-  - name: clang-format-14 alternative 
-    community.general.alternatives:
-      name: clang-format
-      path: /usr/bin/clang-format-14 
-      priority: 100
-
-  - name: Install Timescale apt key
-    apt_key:
-     url: https://packagecloud.io/timescale/timescaledb/gpgkey
-     state: present
-
-  - name: Add Timescale repository
-    apt_repository:
-      repo: "deb https://packagecloud.io/timescale/timescaledb/debian/ buster main"
-      state: present
-      update_cache: true
-
-  - name: Install timescaledb-tools package
-    apt:
-      name: ['timescaledb-tools']
-      update_cache: true
-      state: present
+      
